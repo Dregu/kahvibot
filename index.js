@@ -50,10 +50,14 @@ stats.on('drink', (ctx) => {
 const editText = (ctx, chat, msg, from, drink) => {
     let drinks = nconf.get('stats:'+chat+':'+msg)
     let amount = { tee: 0, kahvi: 0, kalja: 0 }
+    let all = 0
     for(let key in drinks) {
-        if (drinks.hasOwnProperty(key)) amount[drinks[key]]++
+        if (drinks.hasOwnProperty(key)) {
+            amount[drinks[key]]++
+            all++
+        }
     }
-    ctx.editMessageText(`Juotko kahvia?`, Extra.HTML().markup((m) =>
+    ctx.editMessageText(`Juotko kahvia? (${all})`, Extra.HTML().markup((m) =>
         m.inlineKeyboard([
             m.callbackButton(`Juon kahvia (${amount['kahvi']})`, 'kahvi'),
             m.callbackButton(`Teetä minulle (${amount['tee']})`, 'tee'),
