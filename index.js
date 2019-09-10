@@ -16,13 +16,41 @@ bot.start((ctx) => ctx.reply('Oispa tilastoja!'))
 
 bot.command('kahvihetki', (ctx) => {
     ctx.session = {}
-    return ctx.reply('Juotko kahvia?', Extra.HTML().markup((m) =>
+    return ctx.reply('Juotko kahvia tai kenties teetä? Oispa tilastoja.', Extra.HTML().markup((m) =>
         m.inlineKeyboard([
-            m.callbackButton('Juon kahvia', 'kahvi'),
-            m.callbackButton('Teetä minulle', 'tee'),
-            m.callbackButton('Kaljaaaaa', 'kalja')
+            m.callbackButton('Kahvi', 'kahvi'),
+            m.callbackButton('Tee', 'tee')
         ])
     ))
+})
+
+bot.command('kaljahetki', (ctx) => {
+    ctx.session = {}
+    return ctx.reply('Kalja auki saatana!', Extra.HTML().markup((m) =>
+        m.inlineKeyboard([
+            m.callbackButton('Kippis!', 'kalja')
+        ])
+    ))
+})
+
+bot.command('stats', async (ctx) => {
+    let chat = ctx.chat.id
+    let user_id = ctx.from.id
+    console.log(chat, user_id)
+    let stats = nconf.get('stats:'+chat)
+    console.log(stats)
+    let me = { kahvi: 0, tee: 0, kalja: 0 }
+    for(let key in stats) {
+        if(stats.hasOwnProperty(key)) {
+            for(let i in stats[key]) {
+                let drink = stats[key][i]
+                me[drink]++
+            }
+        }
+    }
+    let user = await ctx.getChatMember(chat, user_id)
+    let name = user.user.first_name + ' ' + user.user.last_name
+    ctx.reply(`${name} on juonut ${me.kahvi} kahvia${me.tee > 0?(me.kalja > 0?', ':' ja ')+`${me.tee} teetä`:''}${me.kalja>0?` ja ${me.kalja} kalijaa`:''}.`)
 })
 
 const stats = new Router(({ callbackQuery }) => {
@@ -57,14 +85,20 @@ const editText = (ctx, chat, msg, from, drink) => {
             all++
         }
     }
-    ctx.editMessageText(`Juotko kahvia? (${all})`, Extra.HTML().markup((m) =>
-        m.inlineKeyboard([
-            m.callbackButton(`Jep! (${amount['kahvi']})`, 'kahvi'),
-            m.callbackButton(`Teetä! (${amount['tee']})`, 'tee'),
-            m.callbackButton(`Kaljaa! (${amount['kalja']})`, 'kalja')
-        ])
-    ))
-    return
+    if(drink == 'kalja') {
+        ctx.editMessageText(`Kalja auki saatana! (<b>${all}</b>)`, Extra.HTML().markup((m) =>
+            m.inlineKeyboard([
+                m.callbackButton(`Kippis! (${amount['kalja']})`, 'kalja')
+            ])
+        ))
+    } else {
+        ctx.editMessageText(`Juotko kahvia tai kenties teetä? Oispa tilastoja. (<b>${all}</b>)`, Extra.HTML().markup((m) =>
+            m.inlineKeyboard([
+                m.callbackButton(`Kahvi (${amount['kahvi']})`, 'kahvi'),
+                m.callbackButton(`Tee (${amount['tee']})`, 'tee')
+            ])
+        ))
+    }
 }
 
 bot.on('callback_query', stats)
