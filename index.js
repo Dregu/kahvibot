@@ -16,7 +16,7 @@ bot.start((ctx) => ctx.reply('Oispa tilastoja!'))
 
 bot.command('kahvihetki', (ctx) => {
     ctx.session = {}
-    return ctx.reply('Juotko kahvia tai kenties teetä? Oispa tilastoja.', Extra.HTML().markup((m) =>
+    return ctx.reply('Aina on hyvä hetki juoda kahvia! Satutko juomaan juuri nyt kahvia tai kenties teetä? Oispa tilastoja.', Extra.HTML().markup((m) =>
         m.inlineKeyboard([
             m.callbackButton('Kahvi', 'kahvi'),
             m.callbackButton('Tee', 'tee')
@@ -55,7 +55,7 @@ bot.command('stats', async (ctx) => {
         (me.tee > 0?`${me.tee} teetä`:''),
         (me.kalja > 0?`${me.kalja} kaljaa`:'')
     ].filter(i => i.length > 0).join(', ').split('').reverse().join('').replace(/ ,/, ' aj ').split('').reverse().join('')
-    ctx.reply(`${name} on juonut ${list}.`)
+    ctx.reply(`${name} ${list.length > 0?`on juonut ${list}.`:'ei ole koskaan juonut yhtään mitään!'}`)
 })
 
 bot.command('top', (ctx) => {
@@ -101,7 +101,7 @@ const editText = (ctx, chat, msg, from, drink) => {
             ])
         ))
     } else {
-        ctx.editMessageText(`Juotko kahvia tai kenties teetä? Oispa tilastoja. (<b>${all}</b>)`, Extra.HTML().markup((m) =>
+        ctx.editMessageText(`Aina on hyvä hetki juoda kahvia! Satutko juomaan juuri nyt kahvia tai kenties teetä? Oispa tilastoja. (<b>${all}</b>)`, Extra.HTML().markup((m) =>
             m.inlineKeyboard([
                 m.callbackButton(`Kahvi (${amount['kahvi']})`, 'kahvi'),
                 m.callbackButton(`Tee (${amount['tee']})`, 'tee')
