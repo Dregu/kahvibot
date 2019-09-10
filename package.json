@@ -1,0 +1,23 @@
+{
+  "name": "kahvibot",
+  "version": "1.0.0",
+  "description": "NääsPeksin kahvitilastot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dregu/kahvibot.git"
+  },
+  "author": "Dregu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dregu/kahvibot/issues"
+  },
+  "homepage": "https://github.com/Dregu/kahvibot#readme",
+  "dependencies": {
+    "nconf": "^0.10.0",
+    "telegraf": "^3.32.0"
+  }
+}
