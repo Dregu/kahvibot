@@ -50,7 +50,16 @@ bot.command('stats', async (ctx) => {
     }
     let user = await ctx.getChatMember(chat, user_id)
     let name = user.user.first_name + ' ' + user.user.last_name
-    ctx.reply(`${name} on juonut ${me.kahvi} kahvia${me.tee > 0?(me.kalja > 0?', ':' ja ')+`${me.tee} teetä`:''}${me.kalja>0?` ja ${me.kalja} kalijaa`:''}.`)
+    let list = [
+        (me.kahvi > 0?`${me.kahvi} kahvia`:''),
+        (me.tee > 0?`${me.tee} teetä`:''),
+        (me.kalja > 0?`${me.kalja} kaljaa`:'')
+    ].filter(i => i.length > 0).join(', ').split('').reverse().join('').replace(/ ,/, ' aj ').split('').reverse().join('')
+    ctx.reply(`${name} on juonut ${list}.`)
+})
+
+bot.command('top', (ctx) => {
+    ctx.reply('Soon.')
 })
 
 const stats = new Router(({ callbackQuery }) => {
