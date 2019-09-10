@@ -18,8 +18,8 @@ bot.command('kahvihetki', (ctx) => {
     ctx.session = {}
     return ctx.reply('Juotko kahvia?', Extra.HTML().markup((m) =>
         m.inlineKeyboard([
-            m.callbackButton('Juon!', 'kahvi'),
-            m.callbackButton('Teetä kiitos!', 'tee'),
+            m.callbackButton('Juon kahvia', 'kahvi'),
+            m.callbackButton('Teetä minulle', 'tee'),
             m.callbackButton('Kaljaaaaa', 'kalja')
         ])
     ))
@@ -55,8 +55,8 @@ const editText = (ctx, chat, msg, from, drink) => {
     }
     ctx.editMessageText(`Juotko kahvia?`, Extra.HTML().markup((m) =>
         m.inlineKeyboard([
-            m.callbackButton(`Juon! (${amount['kahvi']})`, 'kahvi'),
-            m.callbackButton(`Teetä kiitos! (${amount['tee']})`, 'tee'),
+            m.callbackButton(`Juon kahvia (${amount['kahvi']})`, 'kahvi'),
+            m.callbackButton(`Teetä minulle (${amount['tee']})`, 'tee'),
             m.callbackButton(`Kaljaaaaa (${amount['kalja']})`, 'kalja')
         ])
     ))
