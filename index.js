@@ -53,7 +53,7 @@ const editText = (ctx, chat, msg, from, drink) => {
     for(let key in drinks) {
         if (drinks.hasOwnProperty(key)) amount[drinks[key]]++
     }
-    ctx.editMessageText(`Juotko kahvia?\nNyt juo: ${amount}`, Extra.HTML().markup((m) =>
+    ctx.editMessageText(`Juotko kahvia?`, Extra.HTML().markup((m) =>
         m.inlineKeyboard([
             m.callbackButton(`Juon! (${amount['kahvi']})`, 'kahvi'),
             m.callbackButton(`Teetä kiitos! (${amount['tee']})`, 'tee'),
