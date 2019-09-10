@@ -59,9 +59,9 @@ const editText = (ctx, chat, msg, from, drink) => {
     }
     ctx.editMessageText(`Juotko kahvia? (${all})`, Extra.HTML().markup((m) =>
         m.inlineKeyboard([
-            m.callbackButton(`Juon kahvia (${amount['kahvi']})`, 'kahvi'),
-            m.callbackButton(`Teetä minulle (${amount['tee']})`, 'tee'),
-            m.callbackButton(`Kaljaaaaa (${amount['kalja']})`, 'kalja')
+            m.callbackButton(`Jep! (${amount['kahvi']})`, 'kahvi'),
+            m.callbackButton(`Teetä! (${amount['tee']})`, 'tee'),
+            m.callbackButton(`Kaljaa! (${amount['kalja']})`, 'kalja')
         ])
     ))
     return
